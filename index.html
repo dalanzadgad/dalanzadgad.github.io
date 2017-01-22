@@ -2,24 +2,75 @@
 <html lang="en">
     <head>
        <script type="text/javascript" src="../js/jquery-2.2.0.min.js"></script>
-       <script src="../js/phaser.min.js"></script>
+       <script src="js/phaser.min.js"></script>
 
     </head>
     <body>
 <script>
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create });
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
 
 function preload() {
 
-    game.load.image('mushroom', '../images/magus.png');
+    game.load.spritesheet('mummy', 'images/sprite.png', 128, 126, 16);
+    game.load.audiosprite('boden', ['audio/audio.mp3']);
+
 
 }
 
+var back;
+var mummy;
+var anim;
+var loopText;
+
 function create() {
 
-    //  This simply creates a sprite using the mushroom image we loaded above and positions it at 200 x 200
-    var test = game.add.sprite(200, 200, 'mushroom');
+    mummy = game.add.sprite(200, 200, 'mummy', 5);
+    mummy.scale.set(2);
+    mummy.smoothed = false;
+    anim = mummy.animations.add('walk');
+
+    anim.onStart.add(animationStarted, this);
+    anim.onLoop.add(animationLooped, this);
+    anim.onComplete.add(animationStopped, this);
+
+    anim.play(10, true);
+    music = game.add.audio('boden');
+    music.play();
+
+}
+
+function animationStarted(sprite, animation) {
+
+    game.add.text(32, 32, 'Animation started', { fill: 'white' });
+
+}
+
+function animationLooped(sprite, animation) {
+
+    if (animation.loopCount === 1)
+    {
+        loopText = game.add.text(32, 64, 'Animation looped', { fill: 'white' });
+    }
+    else
+    {
+        loopText.text = 'Animation looped x' + animation.loopCount;
+        animation.loop = true;
+    }
+
+}
+
+function animationStopped(sprite, animation) {
+
+    game.add.text(32, 64+32, 'Animation stopped', { fill: 'white' });
+
+}
+
+function update() {
+
+    if (anim.isPlaying)
+    {
+    }
 
 }
 
