@@ -36,8 +36,12 @@ function create() {
 
     anim.play(10, true);
     music = game.add.audio('boden');
-    music.play();
+    music.onDecoded.add(start, this);
 
+
+}
+function start(){
+   music.fadeIn(4000);
 }
 
 function animationStarted(sprite, animation) {
