@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-       <script type="text/javascript" src="../js/jquery-2.2.0.min.js"></script>
        <script src="js/phaser.min.js"></script>
 
     </head>
@@ -12,10 +11,9 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: p
 
 function preload() {
 
-    game.load.spritesheet('mummy', 'images/sprite.png', 128, 126, 16);
-    game.load.bitmapFont('desyrel', 'ubuntu.png', 'ubuntu.xml');
-
-
+   game.load.spritesheet('mummy', 'images/sprite.png', 128, 126, 16);
+   game.load.bitmapFont('ubuntu', 'ubuntu.png', 'ubuntu.fnt');
+   game.load.audio('boden', ['audio/audio.mp3']);
 
 }
 
@@ -23,66 +21,86 @@ var back;
 var mummy;
 var anim;
 var loopText;
+var music;
+var isMute=true;
 
 function create() {
 
-    mummy = game.add.sprite(200, 200, 'mummy', 5);
-    mummy.scale.set(2);
-    mummy.smoothed = false;
-    anim = mummy.animations.add('walk');
+   mummy = game.add.sprite(200, 200, 'mummy', 5);
+   mummy.scale.set(2);
+   mummy.smoothed = false;
+   anim = mummy.animations.add('walk');
+   music = game.add.audio('boden');
 
-    anim.onStart.add(animationStarted, this);
-    anim.onLoop.add(animationLooped, this);
-    anim.onComplete.add(animationStopped, this);
+   anim.onStart.add(animationStarted, this);
+   anim.onLoop.add(animationLooped, this);
+   anim.onComplete.add(animationStopped, this);
 
-    anim.play(10, true);
-    bmpText = game.add.bitmapText(10, 100, 'desyrel','Drag me around !',34);
+   anim.play(10, true);
+   bmpText = game.add.bitmapText(10, 100, 'ubuntu','Drag me around !',34);
 
-    bmpText.inputEnabled = true;
+   bmpText.inputEnabled = true;
 
-    bmpText.input.enableDrag();
+   bmpText.input.enableDrag();
+   bmpText.alpha = 0.1;
+
+   game.add.tween(bmpText).to( { alpha: 1 }, 2000, "Linear", true);
+
+   mummy.inputEnabled = true;
+   mummy.events.onInputDown.add(onclick, this);
+
+}
+
+function onclick(mummy){
+   console.log('click');
+   isMute = !isMute;
+   console.log(isMute);
+   if (isMute === true){
+      music.stop();
+   }
+   else{
+      music.play();
+   }
 
 
 }
 
 function animationStarted(sprite, animation) {
 
-    game.add.text(32, 32, 'Animation started', { fill: 'white' });
+   game.add.text(32, 32, 'Animation started', { fill: 'white' });
 
 }
 
 function animationLooped(sprite, animation) {
 
-    if (animation.loopCount === 1)
-    {
-        loopText = game.add.text(32, 64, 'Animation looped', { fill: 'white' });
-    }
-    else
-    {
-        loopText.text = 'Animation looped x' + animation.loopCount;
-        animation.loop = true;
-    }
+   if (animation.loopCount === 1)
+   {
+      loopText = game.add.text(32, 64, 'Animation looped', { fill: 'white' });
+   }
+   else
+   {
+      loopText.text = 'Animation looped x' + animation.loopCount;
+      animation.loop = true;
+   }
 
 }
 
 function animationStopped(sprite, animation) {
 
-    game.add.text(32, 64+32, 'Animation stopped', { fill: 'white' });
+   game.add.text(32, 64+32, 'Animation stopped', { fill: 'white' });
 
 }
 
 function update() {
 
-    if (anim.isPlaying)
-    {
-    }
+   if (anim.isPlaying)
+   {
+   }
 
 }
 
 </script>
 
-       <!-- Bootstrap core JavaScript
-	  ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   </body>
