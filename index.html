@@ -13,7 +13,8 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: p
 function preload() {
 
     game.load.spritesheet('mummy', 'images/sprite.png', 128, 126, 16);
-    game.load.audiosprite('boden', ['audio/audio.mp3']);
+    game.load.bitmapFont('desyrel', 'ubuntu.png', 'ubuntu.xml');
+
 
 
 }
@@ -35,13 +36,13 @@ function create() {
     anim.onComplete.add(animationStopped, this);
 
     anim.play(10, true);
-    music = game.add.audio('boden');
-    music.onDecoded.add(start, this);
+    bmpText = game.add.bitmapText(10, 100, 'desyrel','Drag me around !',34);
+
+    bmpText.inputEnabled = true;
+
+    bmpText.input.enableDrag();
 
 
-}
-function start(){
-   music.fadeIn(4000);
 }
 
 function animationStarted(sprite, animation) {
