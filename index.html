@@ -25,33 +25,41 @@ var music;
 var isMute=true;
 
 function create() {
+   // The create function follows the preload function
+   // This function sets the game
 
+   // adds the Frog
    mummy = game.add.sprite(200, 200, 'mummy', 5);
    mummy.scale.set(2);
    mummy.smoothed = false;
-   anim = mummy.animations.add('walk');
+
+   // music
    music = game.add.audio('boden');
 
+
+   // Frog's walking isn't it
+   anim = mummy.animations.add('walk');
+   // three callbacks: start, loop, complete
    anim.onStart.add(animationStarted, this);
    anim.onLoop.add(animationLooped, this);
    anim.onComplete.add(animationStopped, this);
-
    anim.play(10, true);
+
+   // adds some text
    bmpText = game.add.bitmapText(10, 100, 'ubuntu','Drag me around !',34);
-
    bmpText.inputEnabled = true;
-
    bmpText.input.enableDrag();
    bmpText.alpha = 0.1;
-
    game.add.tween(bmpText).to( { alpha: 1 }, 2000, "Linear", true);
 
+   // Frog reacts by singing when it is clicked
    mummy.inputEnabled = true;
    mummy.events.onInputDown.add(onclick, this);
-
 }
 
+
 function onclick(mummy){
+   // Frog sings when it is clicked
    console.log('click');
    isMute = !isMute;
    console.log(isMute);
@@ -61,14 +69,10 @@ function onclick(mummy){
    else{
       music.play();
    }
-
-
 }
 
 function animationStarted(sprite, animation) {
-
    game.add.text(32, 32, 'Animation started', { fill: 'white' });
-
 }
 
 function animationLooped(sprite, animation) {
@@ -82,7 +86,6 @@ function animationLooped(sprite, animation) {
       loopText.text = 'Animation looped x' + animation.loopCount;
       animation.loop = true;
    }
-
 }
 
 function animationStopped(sprite, animation) {
