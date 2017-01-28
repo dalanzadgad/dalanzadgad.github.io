@@ -8,13 +8,14 @@
 <script>
 
 
-game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
+game = new Phaser.Game(800, 600, Phaser.CANVAS, 'body', { preload: preload, create: create, update: update });
 
 function preload() {
 
    game.load.bitmapFont('ubuntu', 'rolling-thunder.png', 'rolling-thunder.xml');
 
 }
+
 
 function create() {
 
