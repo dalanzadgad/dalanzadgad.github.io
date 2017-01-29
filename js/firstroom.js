@@ -10,7 +10,7 @@ FirstRoom.displayRoom = function(){
    FirstRoom.bmd.copy('roomMap');
    FirstRoom.bmd.update();
 
-   FirstRoom.image = game.add.sprite(100, 100, 'pic');
+   FirstRoom.image = game.add.sprite(100, 100, 'room');
    FirstRoom.image.smoothed = false;
    FirstRoom.image.scale.set(1);
    FirstRoom.image.alpha=0;
@@ -50,6 +50,12 @@ FirstRoom.checkMouse = function(){
 
 }
 
+FirstRoom.fadeOut = function(){
+   FirstRoom.fadeOut = game.add.tween(FirstRoom.image);
+   FirstRoom.fadeOut.to( { alpha: 0 }, 1000, "Linear", true);
+   FirstRoom.fadeOut.onComplete.add(CampFire.displayFire , this);
+}
+
 var msg = false;
 
 FirstRoom.down = function(){
@@ -76,8 +82,8 @@ FirstRoom.createTitle = function(){
 
 FirstRoom.titlefadeOut = function(){
 
-   FirstRoom.fadeOut = game.add.tween(FirstRoom.title);
-   FirstRoom.fadeOut.to( { alpha: 0 }, 1000, "Linear", true);
-   FirstRoom.fadeOut.onComplete.add(function(){msg=false;} , this);
+   s = game.add.tween(FirstRoom.title);
+   s.to( { alpha: 0 }, 1000, "Linear", true);
+   s.onComplete.add(function(){ msg=false; FirstRoom.fadeOut(); } , this);
 
 }

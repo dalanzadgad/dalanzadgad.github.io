@@ -4,6 +4,7 @@
        <script src="js/phaser.min.js"></script>
        <script type="text/javascript" src="js/firstmessage.js"></script>
        <script type="text/javascript" src="js/firstroom.js"></script>
+       <script type="text/javascript" src="js/campfire.js"></script>
     </head>
     <body>
 <script>
@@ -15,8 +16,10 @@ var bmd;
 function preload() {
 
    game.load.bitmapFont('ubuntu', 'rolling-thunder.png', 'rolling-thunder.xml');
-   game.load.spritesheet('pic', 'images/firstRoom.png', 500, 355, 13)
+   game.load.spritesheet('room', 'images/firstRoom.png', 500, 355, 13)
    game.load.image('roomMap', 'images/roomMap.png')
+   game.load.spritesheet('campFire', 'images/campFire.png', 854, 480, 6)
+   game.load.audio('fnaf', ['audio/fnaf.mp3']);
 
 }
 
