@@ -73,20 +73,26 @@ FirstRoom.down = function(){
 }
 
 FirstRoom.createTitle = function(){
-
-   computerMsg = game.add.bitmapText(10, 500, 'ubuntu', ' You clicked the computer...', 14);
+   computerMsg = game.add.bitmapText(100, 500, 'ubuntu', ' You clicked the computer...', 14);
    FirstRoom.computerMsg = computerMsg;
-   computerMsg.alpha = 0.1;
-
-   s = game.add.tween(computerMsg);
-   s.to( { alpha: 1 }, 1000, "Linear", true);
-   s.onComplete.add(FirstRoom.msgFadeOut, this);
+   typingsound = game.add.audio('typingsound');
+   FirstRoom.title = typewriter.init(game, {
+      x: 100,
+      y: 500,
+      writerObj: FirstRoom.computerMsg,
+      time:50,
+      maxWidth: 500,
+      endFn: FirstRoom.msgFadeOut,
+      sound: typingsound,
+      text: "You clicked on the computer..."
+   });
+   typewriter.start();
 }
 
 FirstRoom.msgFadeOut = function(){
 
    s = game.add.tween(FirstRoom.computerMsg);
-   s.to( { alpha: 0 }, 1000, "Linear", true);
+   s.to( { alpha: 0 }, 2000, "Linear", true);
    s.onComplete.add(function(){ msg=false; FirstRoom.fadeOut(); } , this);
 
 }

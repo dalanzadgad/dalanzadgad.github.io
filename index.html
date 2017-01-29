@@ -5,9 +5,12 @@
        <script type="text/javascript" src="js/firstmessage.js"></script>
        <script type="text/javascript" src="js/firstroom.js"></script>
        <script type="text/javascript" src="js/campfire.js"></script>
+       <script type="text/javascript" src="js/typewriter.js"></script>
+
     </head>
     <body>
 <script>
+var typewriter = new Typewriter();
 
 
 game = new Phaser.Game(800, 600, Phaser.CANVAS, 'body', { preload: preload, create: create, update: update });
@@ -22,6 +25,7 @@ function preload() {
    game.load.spritesheet('skyline', 'images/skyline.png', 500, 708, 31)
    game.load.spritesheet('snowy', 'images/snowy.png', 500, 340, 41)
    game.load.audio('fnaf', ['audio/fnaf.mp3']);
+   game.load.audio('typingsound', ['audio/typingsound.mp3']);
 
 }
 

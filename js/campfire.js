@@ -26,6 +26,13 @@ CampFire.displayFire = function(){
    music = game.add.audio('fnaf');
    CampFire.music = music;
    music.onDecoded.add(start, this);
+
+   game.onPause.add(function () {
+      music.pause();
+   });
+   game.onResume.add(function () {
+      music.resume();
+   });
 }
 
 function start(){
