@@ -1,7 +1,7 @@
 
 var Title = Title || {};
 
-Title.fadeDuration = 1000;
+Title.fadeDuration = 4000;
 
 Title.createTitle = function(){
 

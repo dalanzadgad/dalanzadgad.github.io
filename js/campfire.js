@@ -24,6 +24,7 @@ CampFire.displayFire = function(){
    s3.onComplete.add(CampFire.fadeOut, this);
 
    music = game.add.audio('fnaf');
+   CampFire.music = music;
    music.onDecoded.add(start, this);
 }
 
@@ -76,6 +77,7 @@ var Snowy = Snowy || {};
 Snowy.displaySnowy = function(){
 
    snowyImage = game.add.sprite(-100, 50, 'snowy');
+   Snowy.snowyImage = snowyImage;
    snowyImage.smoothed = false;
    snowyImage.scale.set(1.5);
    snowyImage.alpha=0;
@@ -88,5 +90,29 @@ Snowy.displaySnowy = function(){
 
    s2 = game.add.tween(snowyImage);
    s2.to({x:100}, 15000, "Linear", true);
+   s2.onComplete.add(Snowy.displayPressStart, this);
+
+}
+
+Snowy.displayPressStart = function(){
+
+   title = game.add.bitmapText(200, 550, 'ubuntu', 'PRESS SPACE TO START' , 20);
+   Snowy.title = title;
+   title.alpha = 0.1;
+
+   s = game.add.tween(Snowy.title);
+   s.to( { alpha: 1 }, 2000, "Linear", true);
+   spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+   spaceKey.onDown.add(Snowy.fadeOut, this);
+
+}
+
+Snowy.fadeOut = function(){
+   CampFire.music.fadeOut(2000);
+   s1 = game.add.tween(Snowy.title);
+   s1.to( { alpha: 0 }, 2000, "Linear", true);
+
+   s2 = game.add.tween(Snowy.snowyImage);
+   s2.to( { alpha: 0 }, 2000, "Linear", true);
 
 }
