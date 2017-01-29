@@ -17,5 +17,6 @@ Title.fadeOut = function(){
 
    Title.fadeOut = game.add.tween(Title.title);
    Title.fadeOut.to( { alpha: 0 }, 4000, "Linear", true);
+   Title.fadeOut.onComplete.add(FirstRoom.displayRoom, this);
 
 }

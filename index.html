@@ -3,6 +3,7 @@
     <head>
        <script src="js/phaser.min.js"></script>
        <script type="text/javascript" src="js/firstmessage.js"></script>
+       <script type="text/javascript" src="js/firstroom.js"></script>
     </head>
     <body>
 <script>
@@ -13,6 +14,7 @@ game = new Phaser.Game(800, 600, Phaser.CANVAS, 'body', { preload: preload, crea
 function preload() {
 
    game.load.bitmapFont('ubuntu', 'rolling-thunder.png', 'rolling-thunder.xml');
+   game.load.spritesheet('pic', 'images/firstRoom.png', 500, 355, 13)
 
 }
 
@@ -21,7 +23,6 @@ function create() {
 
    // adds some text
    Title.createTitle();
-
 }
 
 
