@@ -10,11 +10,13 @@
 
 
 game = new Phaser.Game(800, 600, Phaser.CANVAS, 'body', { preload: preload, create: create, update: update });
+var bmd;
 
 function preload() {
 
    game.load.bitmapFont('ubuntu', 'rolling-thunder.png', 'rolling-thunder.xml');
    game.load.spritesheet('pic', 'images/firstRoom.png', 500, 355, 13)
+   game.load.image('roomMap', 'images/roomMap.png')
 
 }
 
@@ -27,7 +29,7 @@ function create() {
 
 
 function update(){
-
+   FirstRoom.checkMouse();
 }
 
 </script>
