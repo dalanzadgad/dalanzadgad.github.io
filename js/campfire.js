@@ -5,10 +5,11 @@ CampFire.fadeDuration = 1000;
 
 CampFire.displayFire = function(){
 
+   // Campfire appears
    campImage = game.add.sprite(100, 100, 'campFire');
    campImage.smoothed = false;
    campImage.scale.set(1);
-   campImage.alpha=0;
+   campImage.alpha = 0;
 
    anim = campImage.animations.add('work');
    anim.play(10, true);
@@ -16,17 +17,21 @@ CampFire.displayFire = function(){
    s1 = game.add.tween(campImage);
    s1.to( { alpha: 1 }, CampFire.fadeDuration, "Linear", true);
 
+   // Campfire moves in x
    s2 = game.add.tween(campImage);
    s2.to({x:-100}, 15000, "Linear", true);
 
+   // Campfire moves in y
    s3 = game.add.tween(campImage);
    s3.to({y:100}, 9000, "Linear", true);
    s3.onComplete.add(CampFire.fadeOut, this);
 
+   // Music comes in
    music = game.add.audio('fnaf');
    CampFire.music = music;
    music.onDecoded.add(start, this);
 
+   // Music gets paused when the game is
    game.onPause.add(function () {
       music.pause();
    });
