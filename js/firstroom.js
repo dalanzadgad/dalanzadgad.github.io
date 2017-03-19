@@ -76,9 +76,12 @@ FirstRoom.fadeOut = function(){
 var msg = false;
 
 FirstRoom.down = function(){
+  console.log("toto")
   if (!(FirstRoom.window1 === undefined) && FirstRoom.window1.alpha != 0){
     if (!FirstRoom.isWindowOver){
       console.log('clicked and not on window');
+      Title.clicksound.play();
+
       FirstRoom.windowfadeOut = game.add.tween(FirstRoom.window1);
       FirstRoom.windowfadeOut.to( { alpha: 0 }, FirstRoom.fadeDuration, "Linear", true);
     }
@@ -89,6 +92,8 @@ FirstRoom.down = function(){
   }
   else if (FirstRoom.isOver){
   console.log("clicked on room");
+  Title.clicksound.play();
+
 
       x = game.input.x;
       y = game.input.y;
@@ -115,7 +120,7 @@ FirstRoom.bottle = function(){
   window1 = game.add.sprite(20, 20, 'window');
   FirstRoom.window1 = window1;
   window1.smoothed = false;
-  window1.scale.set(1);
+  window1.scale.set(0.5);
   window1.alpha=0;
 
   FirstRoom.windowfadeIn = game.add.tween(window1);
