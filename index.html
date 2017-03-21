@@ -8,6 +8,7 @@
   <script type="text/javascript" src="js/firstroom.js"></script>
   <script type="text/javascript" src="js/campfire.js"></script>
   <script type="text/javascript" src="js/typewriter.js"></script>
+  <script type="text/javascript" src="js/create.js"></script>
 
 </head>
 <body>
@@ -15,6 +16,7 @@
 
   // Instanciating Typewriter object
   var typewriter = new Typewriter();
+  var clicksound;
 
   // Instanciating Phaser object
   game = new Phaser.Game(800, 600, Phaser.CANVAS, 'body', { preload: preload,
@@ -34,21 +36,15 @@
       game.load.spritesheet('snowy', 'images/snowy.png', 500, 340, 41)
       game.load.audio('fnaf', ['audio/fnaf.mp3']);
       game.load.audio('typingsound', ['audio/typingsound.mp3']);
-
-    }
-
-    // Firing the first event sequence (the title)
-    function create() {
+      game.scenes = [];
     }
 
     // Checking the mouse regularly (in this case for the first room)
     function update(){
-      scene.update();
+      for (var i=0; i<game.scenes.length;i++){
+        game.scenes[i].update();
+      }
     }
-
-    var scene = new Scene1();
-    scene.init(game, {objects: [obj],
-                      rules: [r]});
 
   </script>
   <!-- Placed at the end of the document so the pages load faster -->

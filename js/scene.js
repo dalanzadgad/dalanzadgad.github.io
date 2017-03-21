@@ -28,19 +28,21 @@ function fadeOut(src, duration, onComplete){
 function Scene1(){
     this.init = function(gameInstance, options){
        this.game = gameInstance;
+       this.game.scenes.push(this);
+       console.log(this.game.scenes)
+       //TODO: take background, music and map out to objects
        this.background = options.background || null;
        this.music = options.music || null;
        this.map = options.map || null;
        this.objects = {};
        this.rules = [];
-       console.log(options.objects)
-       for (i=0;i<options.objects.length;i++){
-          var o = options.objects[i];
-          console.log(game)
-          //
-          //o.bitmapText.alpha = 0.1;
-          this.objects[o.name] = o;
-          console.log('name' + o.name + o);
+       if (!(options.objects === undefined)){
+         for (i=0;i<options.objects.length;i++){
+            var o = options.objects[i];
+            console.log(game)
+            this.objects[o.name] = o;
+            console.log('name' + o.name + o);
+         }
        }
        console.log('rules length', options.rules.length);
        for (i=0;i<options.rules.length;i++){
@@ -51,10 +53,10 @@ function Scene1(){
     }
 
     this.update = function(){
-       for (i=0;i<this.rules.length;i++){
+       for (var i=0;i<this.rules.length;i++){
            var c = this.rules[i].conditions;
            var res = c(this);
-           console.log(res);
+           console.log(c+res)
            if (res){
              var a = this.rules[i].actions;
              a(this);
@@ -82,29 +84,3 @@ function Rule1(){
      this.actions = options.actions || function(){};
   }
 }
-
-
-var obj = new Object1()
-
-obj.init({name : 'object_name',
-          text : 'Dans trois minutes au plus tard, \n'+
-                  '  je devrai avoir quitte cet endroit \n'+
-                  'une fois pour toutes...'}
-        );
-
-var r = new Rule1();
-r.init({conditions: function(scene){
-          return !(scene.objects['object_name'].isVisible);},
-
-        actions: function(scene){
-            var o = scene.objects['object_name'];
-            o.isVisible=true;
-            scene.clicksound = game.add.audio('typingsound');
-
-            o.bitmapText = this.game.add.bitmapText(100, 200, 'ubuntu', o.text, 14);
-            o.bitmapText.alpha=0.1;
-            console.log('display object')
-            fadeIn(o.bitmapText, 1000, function(){
-                fadeOut(o.bitmapText, 1000, FirstRoom.displayRoom)});
-        }
-  });

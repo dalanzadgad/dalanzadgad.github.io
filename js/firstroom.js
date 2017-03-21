@@ -71,12 +71,13 @@ FirstRoom.fadeOut = function(){
 
 var msg = false;
 
+
 FirstRoom.down = function(){
   console.log("toto")
   if (!(FirstRoom.window1 === undefined) && FirstRoom.window1.alpha != 0){
     if (!FirstRoom.isWindowOver){
       console.log('clicked and not on window');
-      scene.clicksound.play();
+      clicksound.play();
 
       fadeOut(FirstRoom.window1, 1000);
 
@@ -87,8 +88,8 @@ FirstRoom.down = function(){
     }
   }
   else if (FirstRoom.isOver){
-  console.log("clicked on room");
-  scene.clicksound.play();
+      console.log("clicked on room");
+      clicksound.play();
 
 
       x = game.input.x;
