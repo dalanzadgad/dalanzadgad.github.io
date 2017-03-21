@@ -25,13 +25,11 @@ FirstRoom.displayRoom = function(){
    anim = roomImage.animations.add('work');
    anim.play(10, true);
 
-   FirstRoom.fadeIn = game.add.tween(roomImage);
-   FirstRoom.fadeIn.to( { alpha: 1 }, FirstRoom.fadeDuration, "Linear", true);
+   fadeIn(roomImage, FirstRoom.fadeDuration);
 
    roomImage.inputEnabled = true;
    roomImage.events.onInputOver.add(FirstRoom.over, this);
    roomImage.events.onInputOut.add(FirstRoom.out, this);
-
 
    game.input.onDown.add(FirstRoom.down, this);
 }
@@ -68,9 +66,7 @@ FirstRoom.checkMouse = function(){
 }
 
 FirstRoom.fadeOut = function(){
-   s = game.add.tween(FirstRoom.image);
-   s.to( { alpha: 0 }, 1000, "Linear", true);
-   s.onComplete.add(CampFire.displayFire , this);
+  fadeOut(FirstRoom.image, 1000, CampFire.displayFire);
 }
 
 var msg = false;
@@ -80,10 +76,10 @@ FirstRoom.down = function(){
   if (!(FirstRoom.window1 === undefined) && FirstRoom.window1.alpha != 0){
     if (!FirstRoom.isWindowOver){
       console.log('clicked and not on window');
-      Title.clicksound.play();
+      scene.clicksound.play();
 
-      FirstRoom.windowfadeOut = game.add.tween(FirstRoom.window1);
-      FirstRoom.windowfadeOut.to( { alpha: 0 }, FirstRoom.fadeDuration, "Linear", true);
+      fadeOut(FirstRoom.window1, 1000);
+
     }
     else{
       console.log('clicked and on window');
@@ -92,7 +88,7 @@ FirstRoom.down = function(){
   }
   else if (FirstRoom.isOver){
   console.log("clicked on room");
-  Title.clicksound.play();
+  scene.clicksound.play();
 
 
       x = game.input.x;
@@ -123,8 +119,7 @@ FirstRoom.bottle = function(){
   window1.scale.set(0.5);
   window1.alpha=0;
 
-  FirstRoom.windowfadeIn = game.add.tween(window1);
-  FirstRoom.windowfadeIn.to( { alpha: 1 }, FirstRoom.fadeDuration, "Linear", true);
+  fadeIn(FirstRoom.window1, 1000);
 
   window1.inputEnabled = true;
   window1.events.onInputOver.add(FirstRoom.windowover, this);
@@ -153,9 +148,5 @@ FirstRoom.createTitle = function(){
 }
 
 FirstRoom.msgFadeOut = function(){
-
-   s = game.add.tween(FirstRoom.computerMsg);
-   s.to( { alpha: 0 }, 2000, "Linear", true);
-   s.onComplete.add(function(){ msg=false; FirstRoom.fadeOut(); } , this);
-
+   fadeOut(FirstRoom.computerMsg, 2000, function(){ msg=false; FirstRoom.fadeOut(); })
 }

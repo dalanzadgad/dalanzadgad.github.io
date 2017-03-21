@@ -14,6 +14,7 @@ CampFire.displayFire = function(){
    anim = campImage.animations.add('work');
    anim.play(10, true);
 
+
    s1 = game.add.tween(campImage);
    s1.to( { alpha: 1 }, CampFire.fadeDuration, "Linear", true);
 
