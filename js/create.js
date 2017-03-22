@@ -2,70 +2,71 @@
 function create() {
    clicksound = game.add.audio('typingsound');
 
-
-   var obj = new Object1()
-
-   obj.init({name : 'object_name',
-             text : 'Dans trois minutes au plus tard, \n'+
-                     '  je devrai avoir quitte cet endroit \n'+
-                     'une fois pour toutes...'}
-           );
-
    var r = new Rule1();
 
    r.init({conditions: function(scene){
-             return !(scene.objects['object_name'].isVisible);},
+             return !(scene.objects['first_text'].isVisible);},
 
            actions: function(scene){
-               var o = scene.objects['object_name'];
-               o.isVisible=true;
+               var o = scene.objects['first_text'];
 
-               o.bitmapText = this.game.add.bitmapText(100, 200, 'ubuntu', o.text, 14);
-               o.bitmapText.alpha=0.1;
-               console.log('display object')
-               fadeIn(o.bitmapText, 1000, function(){
-                   fadeOut(o.bitmapText, 1000)});
+               o.isVisible = true;
+               fadeIn(o.sprite, 1000, function(){
+                   fadeOut(o.sprite, 1000,
+                      function(){scene.game.scenes['room'].activate()}
+                    )});
            }
      });
 
    var scene1 = new Scene1();
-   scene1.init(game, {objects: [obj],
+   var text = new Object1()
+
+   text.init({name : 'first_text',
+             text : 'Dans trois minutes au plus tard, \n'+
+                     '  je devrai avoir quitte cet endroit \n'+
+                     'une fois pour toutes...'});
+   scene1.init(game, {name:'title',
+                      objects: [text],
                      rules: [r]});
 
 
-   var r2 = new Rule1();
 
+
+   var r2 = new Rule1();
    r2.init({conditions: function(scene){
-             var o1 = scene.game.scenes[0].objects['object_name'];
-             var s = scene.game.scenes[1];
-             console.log(s.isVisible)
-             return (!(s.isVisible) && (o1.bitmapText.alpha==0));},
+             var o1 = scene.game.scenes['title'].objects['first_text'];
+             var o2 = scene.objects['room'];
+             return (o2.sprite.alpha ==0 && o1.sprite.alpha==0); },
 
            actions: function(scene){
-               scene.isVisible = true;
                // The room appears
-               o = this.game.add.sprite(100, 100, 'room');
-               scene.game.scenes[1].backgroundSprite = o;
-
-               o.smoothed = false;
-               o.scale.set(1);
-               o.alpha = 0;
-
-               // The room gets animated
-               anim = o.animations.add('work');
-               anim.play(10, true);
-               console.log('anim')
-
-               fadeIn(o, 1000)
+               var o = scene.objects['room'];
+               o.animate();
+               fadeIn(o.sprite, 1000)
                //console.log("display room");
            }
      });
 
-
-
-
    var scene2 = new Scene1();
-   scene2.init(game, {background: 'room',
+   var room = new Object1();
+
+   map = {name: 'roomMap',
+        4294902015: function(){console.log('you clicked the computer');},
+        4294901778: function(){console.log('you clicked the bottle');},
+        4278190335: function(){console.log('you clicked the mouchoirs')} }
+
+
+   room.init({name: 'room',
+             image: 'room',
+             map: map,
+             })
+   scene2.init(game, {name: 'room',
+                      objects: [room],
                       rules: [r2]});
-   //game.scenes.push(scene1)
+   scene1.activate();
+
+
+   var scene3 = new Scene1();
+   var campfire = new Object1();
+   campfire.init({name: 'campfire'})
 }
