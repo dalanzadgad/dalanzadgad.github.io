@@ -46,6 +46,35 @@ function Scene1(){
        }
     }
 
+    this.addObject = function(o){
+      if (!(o.text === undefined) && (o.sprite === undefined)){
+         o.sprite = this.game.add.bitmapText(100, 200, 'ubuntu', o.text, 14);
+         o.sprite.alpha = 0;
+      }
+      else if (!(o.image === undefined) && (o.sprite === undefined)){
+        o.sprite = this.game.add.sprite(100, 100, o.image);
+        o.sprite.alpha = 0;
+        o.sprite.smoothed = false;
+        o.sprite.scale.set(1);
+        o.sprite.inputEnabled = true;
+        if (!(o.onOver === undefined)){
+          o.sprite.events.onInputOver.add(o.onOver, this);
+        }
+        if (!(o.onExit === undefined)){
+          o.sprite.events.onInputOut.add(o.onExit, this);
+        }
+      }
+      if (!(o.map === undefined) && (o.bitmapData === undefined)) {
+        // Paints the room map in a bitmap
+        w = o.map.width;
+        h = o.map.height;
+        o.bitmapData = this.game.make.bitmapData(w, h);
+        o.bitmapData.copy(o.actions.name);
+        o.bitmapData.update();
+        o.sprite.events.onInputDown.add(onDownMap, {object:o, scene:this});
+      }
+    }
+
     this.activate = function(){
       this.game.active.push(this.name);
       console.log('activate ' +this.name + ' ' + this.game.active)
@@ -56,33 +85,7 @@ function Scene1(){
          var k = Object.keys(this.objects)[i]
          var o = this.objects[k];
          console.log(o)
-         console.log(o.map)
-         if (!(o.text === undefined) && (o.sprite === undefined)){
-            o.sprite = this.game.add.bitmapText(100, 200, 'ubuntu', o.text, 14);
-            o.sprite.alpha = 0;
-         }
-         else if (!(o.image === undefined) && (o.sprite === undefined)){
-           o.sprite = this.game.add.sprite(100, 100, o.image);
-           o.sprite.alpha = 0;
-           o.sprite.smoothed = false;
-           o.sprite.scale.set(1);
-           o.sprite.inputEnabled = true;
-           if (!(o.onOver === undefined)){
-             o.sprite.events.onInputOver.add(o.onOver, this);
-           }
-           if (!(o.onExit === undefined)){
-             o.sprite.events.onInputOut.add(o.onExit, this);
-           }
-         }
-         if (!(o.map === undefined) && (o.bitmapData === undefined)) {
-           // Paints the room map in a bitmap
-           w = o.map.width;
-           h = o.map.height;
-           o.bitmapData = this.game.make.bitmapData(w, h);
-           o.bitmapData.copy(o.actions.name);
-           o.bitmapData.update();
-           o.sprite.events.onInputDown.add(onDownMap, {object:o, scene:this});
-         }
+         this.addObject(o)
       }
 
     }
