@@ -1,34 +1,18 @@
-function fadeIn(src, duration, onComplete){
-  // The text fades in
-  onComplete = onComplete || undefined;
-  duration = duration || 1000;
-  s = game.add.tween(src);
-  s.to( { alpha: 1 }, duration, "Linear", true);
 
-  // When it has appeared, let it fade out
-  if (!(onComplete === undefined)){
-    s.onComplete.add(onComplete, this);
-  }
-}
-
-function fadeOut(src, duration, onComplete){
-  // The text fades in
-  onComplete = onComplete || undefined;
-  duration = duration || 1000;
-  s = game.add.tween(src);
-  s.to( { alpha: 0 }, duration, "Linear", true);
-
-  // When it has appeared, let it fade out
-  if (!(onComplete === undefined)){
-    s.onComplete.add(onComplete, this);
-  }
-}
 
 function isIn(arr, obj) {
     return (arr.indexOf(obj) != -1);
 }
 
-
+function onDownMap(){
+  clicksound.play();
+  x = game.input.x;
+  y = game.input.y;
+  color = this.object.bitmapData.getPixel32(x-100, y-100);
+  if (isIn(Object.keys(this.object.actions), color.toString())){
+    this.object.actions[color](this.scene);
+  }
+}
 
 
 function Scene1(){
@@ -64,6 +48,7 @@ function Scene1(){
 
     this.activate = function(){
       this.game.active.push(this.name);
+      console.log('activate ' +this.name + ' ' + this.game.active)
 
       // create bitmaps
       for (var i=0;i<Object.keys(this.objects).length;i++){
@@ -72,11 +57,11 @@ function Scene1(){
          var o = this.objects[k];
          console.log(o)
          console.log(o.map)
-         if (!(o.text === undefined)){
+         if (!(o.text === undefined) && (o.sprite === undefined)){
             o.sprite = this.game.add.bitmapText(100, 200, 'ubuntu', o.text, 14);
             o.sprite.alpha = 0;
          }
-         else if (!(o.image === undefined)){
+         else if (!(o.image === undefined) && (o.sprite === undefined)){
            o.sprite = this.game.add.sprite(100, 100, o.image);
            o.sprite.alpha = 0;
            o.sprite.smoothed = false;
@@ -89,14 +74,14 @@ function Scene1(){
              o.sprite.events.onInputOut.add(o.onExit, this);
            }
          }
-         if (!(o.map === undefined)) {
+         if (!(o.map === undefined) && (o.bitmapData === undefined)) {
            // Paints the room map in a bitmap
            w = o.map.width;
            h = o.map.height;
            o.bitmapData = this.game.make.bitmapData(w, h);
            o.bitmapData.copy(o.actions.name);
            o.bitmapData.update();
-           o.sprite.events.onInputDown.add(o.onDown, o);
+           o.sprite.events.onInputDown.add(onDownMap, {object:o, scene:this});
          }
       }
 
@@ -123,15 +108,7 @@ function Object1(){
         this.actions = options.map;
 
       }
-      this.onDown = options.onDown || function(){
-        clicksound.play();
-        x = game.input.x;
-        y = game.input.y;
-        color = this.bitmapData.getPixel32(x-100, y-100);
-        if (isIn(Object.keys(this.actions), color.toString())){
-          this.actions[color]();
-        }
-      }
+      //this.onDown = options.onDown ||
    }
 
    this.animate = function(interval, loop){

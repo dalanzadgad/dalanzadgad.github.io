@@ -13,7 +13,9 @@ function create() {
                o.isVisible = true;
                fadeIn(o.sprite, 1000, function(){
                    fadeOut(o.sprite, 1000,
-                      function(){scene.game.scenes['room'].activate()}
+                      function(){
+                        scene.game.scenes['title'].deactivate();
+                        scene.game.scenes['room'].activate()}
                     )});
            }
      });
@@ -52,7 +54,15 @@ function create() {
 
    map = {name: 'roomMap',
         4294902015: function(){console.log('you clicked the computer');},
-        4294901778: function(){console.log('you clicked the bottle');},
+        4294901778: function(scene){
+          console.log('you clicked the bottle');
+          console.log(scene.game.scenes);
+          scene.game.scenes['room'].deactivate();
+          scene.game.scenes['title'].objects['first_text'].isVisible = false;
+          scene.game.scenes['title'].objects['first_text'].sprite.alpha = 0;
+          fadeOut(scene.game.scenes['room'].objects['room'].sprite, 3000,
+            function(){scene.game.scenes['title'].activate()});
+        },
         4278190335: function(){console.log('you clicked the mouchoirs')} }
 
 
