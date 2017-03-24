@@ -53,7 +53,25 @@ function create() {
    var room = new Object1();
 
    map = {name: 'roomMap',
-        4294902015: function(){console.log('you clicked the computer');},
+        4294902015: function(scene){
+          console.log('you clicked the computer');
+
+          var computerMsg = game.add.bitmapText(100, 500, 'ubuntu', ' You clicked the computer...', 14);
+          typingsound = game.add.audio('typingsound');
+
+          title = typewriter.init(game, {
+             x: 100,
+             y: 500,
+             writerObj: computerMsg,
+             time:50,
+             maxWidth: 500,
+             //endFn: FirstRoom.msgFadeOut,
+             sound: typingsound,
+             text: "You clicked on the computer..."
+          });
+          typewriter.start();
+
+        },
         4294901778: function(scene){
           console.log('you clicked the bottle');
           console.log(scene.game.scenes);
