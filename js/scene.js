@@ -94,6 +94,9 @@ function Scene1(){
       if (index > -1) {
           this.game.active.splice(index, 1);
       }
+      for (var i = 0;i<this.objects;i++){
+          this.objects[i].destroySprite();
+      }
     }
   }
 
@@ -112,6 +115,12 @@ function Object1(){
 
       }
       //this.onDown = options.onDown ||
+   }
+   this.destroySprite = function(){
+     this.sprite.destroy();
+     this.sprite = undefined;
+     this.map = undefined;
+     this.bitmapData = undefined;
    }
 
    this.animate = function(interval, loop){
