@@ -45,6 +45,8 @@ function Typewriter() {
             _that.typedText = game.add.bitmapText(x, y, _that.fontFamily, text, _that.fontSize);
         } else {
             _that.typedText = _that.writerObj;
+            x = _that.writerObj.x;
+            y = _that.writerObj.y;
         }
         _that.typedText.maxWidth = _that.maxWidth;
         _that.currentLetter = 0;

@@ -54,20 +54,20 @@ function create() {
 
    map = {name: 'roomMap',
         4294902015: function(scene){
-          console.log('you clicked the computer');
+          console.log('you clicked the cmputer');
 
-          var computerMsg = game.add.bitmapText(100, 500, 'ubuntu', ' You clicked the computer...', 14);
-          typingsound = game.add.audio('typingsound');
+          var computerMsg = game.add.bitmapText(100, 500, 'ubuntu',
+           ' You clicked the computer...', 14);
+          //typingsound = game.add.audio('typingsound');
 
           title = typewriter.init(game, {
-             x: 100,
-             y: 500,
              writerObj: computerMsg,
              time:50,
              maxWidth: 500,
-             //endFn: FirstRoom.msgFadeOut,
-             sound: typingsound,
-             text: "You clicked on the computer..."
+             endFn: function(){fadeOut(computerMsg, 1000)},
+             sound: typingsound
+
+
           });
           typewriter.start();
 
