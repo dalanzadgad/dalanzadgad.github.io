@@ -56,20 +56,7 @@ function create() {
         4294902015: function(scene){
           console.log('you clicked the cmputer');
 
-          var computerMsg = game.add.bitmapText(100, 500, 'ubuntu',
-           ' You clicked the computer...', 14);
-          //typingsound = game.add.audio('typingsound');
-
-          title = typewriter.init(game, {
-             writerObj: computerMsg,
-             time:50,
-             maxWidth: 500,
-             endFn: function(){fadeOut(computerMsg, 1000)},
-             sound: typingsound
-
-
-          });
-          typewriter.start();
+          typeThis(100, 500, 'You clicked the computer')
 
         },
         4294901778: function(scene){
