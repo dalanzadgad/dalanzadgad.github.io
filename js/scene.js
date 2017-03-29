@@ -5,7 +5,7 @@ function isIn(arr, obj) {
 }
 
 function onDownMap(){
-  clicksound.play();
+  typingsound.play();
   x = game.input.x;
   y = game.input.y;
   color = this.object.bitmapData.getPixel32(x-100, y-100);

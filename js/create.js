@@ -1,6 +1,6 @@
 // Firing the first event sequence (the title)
 function create() {
-   clicksound = game.add.audio('typingsound');
+   typingsound = game.add.audio('typingsound');
 
    var r = new Rule1();
 
