@@ -1,6 +1,15 @@
 // Firing the first event sequence (the title)
 function create() {
    typingsound = game.add.audio('typingsound');
+   game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+  if (game.device.desktop) {
+         alert('dekstop')
+           //code for desktop devices
+       } else {
+           alert('mobile')
+           //code for mobile devices
+       }
+
 
    var r = new Rule1();
 
