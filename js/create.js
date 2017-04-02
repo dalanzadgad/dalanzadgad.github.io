@@ -54,13 +54,11 @@ function create() {
 
    map = {name: 'roomMap',
         4294902015: function(scene){
-          console.log('you clicked the cmputer');
-
-          typeThis(100, 500, 'You clicked the computer')
-
+          addDialog('You clicked the computer')
         },
         4294901778: function(scene){
-          console.log('you clicked the bottle');
+          addDialog('You clicked the bottle')
+
           console.log(scene.game.scenes);
           scene.game.scenes['room'].deactivate();
           scene.game.scenes['title'].objects['first_text'].isVisible = false;
@@ -68,7 +66,7 @@ function create() {
           fadeOut(scene.game.scenes['room'].objects['room'].sprite, 3000,
             function(){scene.game.scenes['title'].activate()});
         },
-        4278190335: function(){console.log('you clicked the mouchoirs')} }
+        4278190335: function(){addDialog('you clicked the mouchoirs')} }
 
 
    room.init({name: 'room',

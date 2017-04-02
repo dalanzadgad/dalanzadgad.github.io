@@ -1,3 +1,7 @@
+var dialogs = [];
+var dialogsSprites = [];
+
+
 function Typewriter() {
     this.typedText;
     this.timer;
@@ -95,7 +99,6 @@ function Typewriter() {
             }
         }
         letter.alpha = 1;
-        console.log(letter.name);
         _that.currentLetter++;
     }
 
@@ -120,4 +123,51 @@ function Typewriter() {
             game.bringToTop(_that.typedText);
         }
     }
+}
+
+function typeThis(x, y, text){
+  var msg = game.add.bitmapText(x, y, 'ubuntu',
+   text, 14);
+  dialogsSprites.push(msg);
+  title = typewriter.init(game, {
+     writerObj: msg,
+     time:50,
+     maxWidth: 500,
+     //endFn: function(){fadeOut(computerMsg, 1000)},
+     sound: typingsound
+
+
+  });
+  typewriter.start();
+}
+
+function addDialog(dlg){
+  if (dialogs.length<3){
+    //dialogs.push(dlg);
+    //typeThis(100, 500 + 14 * dialogs.length, dlg)
+  }
+  else{
+    dialogs.splice(0, 1);
+  }
+  displayDialogs();
+  dialogs.push(dlg);
+  typeThis(100, 500 + 14 * (dialogs.length-1), dlg)
+
+}
+
+function displayDialogs(dlg){
+  for (var i=0; i< dialogsSprites.length ; i++){
+    dialogsSprites[i].destroy();
+  }
+  for (var i=0; i< dialogs.length ; i++){
+     var s = game.add.bitmapText(100, 500+14*i,
+        'ubuntu', dialogs[i], 14);
+     dialogsSprites.push(s);
+  }
+}
+
+function addDialogs(dlg){
+  for (var i =0;i<dlg;i++){
+    addDialog(dlg[i]);
+  }
 }

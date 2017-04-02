@@ -14,22 +14,6 @@ function onDownMap(){
   }
 }
 
-function typeThis(x, y, text){
-  var computerMsg = game.add.bitmapText(x, y, 'ubuntu',
-   text, 14);
-  //typingsound = game.add.audio('typingsound');
-
-  title = typewriter.init(game, {
-     writerObj: computerMsg,
-     time:50,
-     maxWidth: 500,
-     endFn: function(){fadeOut(computerMsg, 1000)},
-     sound: typingsound
-
-
-  });
-  typewriter.start();
-}
 
 function Scene1(){
     this.init = function(gameInstance, options){
