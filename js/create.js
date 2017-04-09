@@ -1,15 +1,6 @@
 // Firing the first event sequence (the title)
 function create() {
    typingsound = game.add.audio('typingsound');
-   game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-  if (game.device.desktop) {
-         alert('dekstop')
-           //code for desktop devices
-       } else {
-           alert('mobile')
-           //code for mobile devices
-       }
-
 
    var r = new Rule1();
 
@@ -81,6 +72,8 @@ function create() {
    room.init({name: 'room',
              image: 'room',
              map: map,
+             x:0,
+             y:0
              })
    scene2.init(game, {name: 'room',
                       objects: [room],

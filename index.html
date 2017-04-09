@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <script src="js/phaser.min.js"></script>
-
+  <meta name="viewport" content="width=device-width, user-scalable=no">
   <!-- Importing Javascripts -->
   <script type="text/javascript" src="js/fade.js"></script>
   <script type="text/javascript" src="js/scene.js"></script>
@@ -12,21 +12,45 @@
   <script type="text/javascript" src="js/create.js"></script>
 
 </head>
-<body>
+<body style="
+  background-color:black;
+  background-image:url('images/background.jpg');
+  background-size:cover;
+  background-position: center;
+ ">
   <script>
 
   // Instanciating Typewriter object
   var typewriter = new Typewriter();
   var typingsound;
+  h = window.screen.availHeight
+  w = window.screen.availWidth
+  console.log(w);
+  console.log(h);
+
+
+  if (w<h){
+    console.log('vertical')
+
+    w = w - 20;
+    h = w*1.3;
+  }
+  else {
+    w = h/1.3;
+  }
 
   // Instanciating Phaser object
-  game = new Phaser.Game(800, 600, Phaser.CANVAS, 'body', { preload: preload,
+  game = new Phaser.Game(w, h, Phaser.CANVAS, 'body', { preload: preload,
     create: create, update: update });
 
-    // Preload, create and update are the 3 main functions sued by Phaser
+    // Preload, create and update are the 3 main functions used by Phaser
 
     // Preloading media (fonts, images, roommaps, sounds)
     function preload() {
+      this.game.scale.pageAlignHorizontally = true;
+      this.game.scale.pageAlignVertically = true;
+      this.game.scale.refresh();
+
       game.load.bitmapFont('ubuntu', 'rolling-thunder.png', 'rolling-thunder.xml');
       game.load.spritesheet('room', 'images/firstRoom.png', 500, 355, 13)
       game.load.image('roomMap', 'images/roomMap.png')

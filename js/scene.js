@@ -8,7 +8,11 @@ function onDownMap(){
   typingsound.play();
   x = game.input.x;
   y = game.input.y;
-  color = this.object.bitmapData.getPixel32(x-100, y-100);
+  console.log(x)
+  console.log(y)
+
+  console.log(this.object)
+  color = this.object.bitmapData.getPixel32(x-this.object.x, y-this.object.y);
   if (isIn(Object.keys(this.object.actions), color.toString())){
     this.object.actions[color](this.scene);
   }
@@ -52,7 +56,7 @@ function Scene1(){
          o.sprite.alpha = 0;
       }
       else if (!(o.image === undefined) && (o.sprite === undefined)){
-        o.sprite = this.game.add.sprite(100, 100, o.image);
+        o.sprite = this.game.add.sprite(o.x, o.y, o.image);
         o.sprite.alpha = 0;
         o.sprite.smoothed = false;
         o.sprite.scale.set(1);
@@ -108,6 +112,8 @@ function Object1(){
       this.image = options.image;
       this.name = options.name;
       this.music = options.music
+      this.x = options.x
+      this.y = options.y
 
       if (!(options.map === undefined)){
         this.map = game.cache.getImage(options.map.name);

@@ -151,7 +151,7 @@ function addDialog(dlg){
   }
   displayDialogs();
   dialogs.push(dlg);
-  typeThis(100, 500 + 14 * (dialogs.length-1), dlg)
+  typeThis(10, 400 + 14 * (dialogs.length-1), dlg)
 
 }
 
@@ -160,7 +160,7 @@ function displayDialogs(dlg){
     dialogsSprites[i].destroy();
   }
   for (var i=0; i< dialogs.length ; i++){
-     var s = game.add.bitmapText(100, 500+14*i,
+     var s = game.add.bitmapText(10, 400+14*i,
         'ubuntu', dialogs[i], 14);
      dialogsSprites.push(s);
   }
