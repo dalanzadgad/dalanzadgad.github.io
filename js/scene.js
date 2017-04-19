@@ -6,13 +6,11 @@ function isIn(arr, obj) {
 
 function onDownMap(){
   typingsound.play();
-  x = game.input.x;
-  y = game.input.y;
-  console.log(x)
-  console.log(y)
-
-  console.log(this.object)
-  color = this.object.bitmapData.getPixel32(x-this.object.x, y-this.object.y);
+  scaleX = this.object.map.width/this.object.sprite.width;
+  scaleY = this.object.map.height/this.object.sprite.height;
+  x = (game.input.x - this.object.x*game.width)*scaleX;
+  y = (game.input.y - this.object.y*game.height)*scaleY;
+  color = this.object.bitmapData.getPixel32(Math.floor(x), Math.floor(y));
   if (isIn(Object.keys(this.object.actions), color.toString())){
     this.object.actions[color](this.scene);
   }
@@ -51,15 +49,37 @@ function Scene1(){
     }
 
     this.addObject = function(o){
+
       if (!(o.text === undefined) && (o.sprite === undefined)){
-         o.sprite = this.game.add.bitmapText(100, 200, 'ubuntu', o.text, 14);
+         size = Math.floor(game.width/40);
+         console.log('size', size)
+         x = o.x*game.width;
+         y = o.y*game.height;
+         o.sprite = this.game.add.bitmapText(x, y, 'ubuntu', o.text, size);
          o.sprite.alpha = 0;
       }
       else if (!(o.image === undefined) && (o.sprite === undefined)){
-        o.sprite = this.game.add.sprite(o.x, o.y, o.image);
+        console.log(game.width)
+
+        x = o.x*game.width;
+        y = o.y*game.height;
+        console.log(game.width)
+
+        o.sprite = this.game.add.sprite(x, y, o.image);
         o.sprite.alpha = 0;
         o.sprite.smoothed = false;
-        o.sprite.scale.set(1);
+        //o.sprite.scale.set(1);
+        console.log(o)
+        if (!(o.w === undefined)){
+          var scale = o.sprite.width / o.sprite.height;
+          console.log(scale)
+          o.sprite.width = o.w * game.width;
+          o.sprite.height = Math.floor(o.sprite.width / scale);
+          console.log(o.sprite.height)
+        }
+        if (!(o.h === undefined)){
+          o.sprite.height = h * game.height;
+        }
         o.sprite.inputEnabled = true;
         if (!(o.onOver === undefined)){
           o.sprite.events.onInputOver.add(o.onOver, this);
@@ -72,9 +92,13 @@ function Scene1(){
         // Paints the room map in a bitmap
         w = o.map.width;
         h = o.map.height;
+        console.log(w)
         o.bitmapData = this.game.make.bitmapData(w, h);
         o.bitmapData.copy(o.actions.name);
+        //o.bitmapData.resize(o.sprite.width, o.sprite.height)
         o.bitmapData.update();
+
+        console.log(o.bitmapData.width, o.bitmapData.height)
         o.sprite.events.onInputDown.add(onDownMap, {object:o, scene:this});
       }
     }
@@ -114,6 +138,7 @@ function Object1(){
       this.music = options.music
       this.x = options.x
       this.y = options.y
+      this.w = options.w
 
       if (!(options.map === undefined)){
         this.map = game.cache.getImage(options.map.name);

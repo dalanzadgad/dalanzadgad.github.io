@@ -126,13 +126,15 @@ function Typewriter() {
 }
 
 function typeThis(x, y, text){
+  size = Math.min(Math.floor(game.width/40), 14);
+  console.log('size', size)
   var msg = game.add.bitmapText(x, y, 'ubuntu',
-   text, 14);
+   text, size);
   dialogsSprites.push(msg);
   title = typewriter.init(game, {
      writerObj: msg,
      time:50,
-     maxWidth: 500,
+     maxWidth: game.width,
      //endFn: function(){fadeOut(computerMsg, 1000)},
      sound: typingsound
 
@@ -151,7 +153,8 @@ function addDialog(dlg){
   }
   displayDialogs();
   dialogs.push(dlg);
-  typeThis(10, 400 + 14 * (dialogs.length-1), dlg)
+  console.log(game.height)
+  typeThis(10, game.height -14*4 + 14 * (dialogs.length-1), dlg)
 
 }
 
@@ -160,8 +163,10 @@ function displayDialogs(dlg){
     dialogsSprites[i].destroy();
   }
   for (var i=0; i< dialogs.length ; i++){
-     var s = game.add.bitmapText(10, 400+14*i,
-        'ubuntu', dialogs[i], 14);
+     size = Math.min(Math.floor(game.width/40), 14)
+     console.log('size', size)
+     var s = game.add.bitmapText(10, game.height -14*4 + 14*i,
+        'ubuntu', dialogs[i], size);
      dialogsSprites.push(s);
   }
 }

@@ -4,6 +4,8 @@
   <script src="js/phaser.min.js"></script>
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <!-- Importing Javascripts -->
+  <link rel="stylesheet" href="css/styles.css">
+
   <script type="text/javascript" src="js/fade.js"></script>
   <script type="text/javascript" src="js/scene.js"></script>
   <script type="text/javascript" src="js/firstroom.js"></script>
@@ -12,44 +14,43 @@
   <script type="text/javascript" src="js/create.js"></script>
 
 </head>
-<body style="
-  background-color:black;
-  background-image:url('images/background.jpg');
-  background-size:cover;
-  background-position: center;
- ">
+<body>
   <script>
 
   // Instanciating Typewriter object
   var typewriter = new Typewriter();
   var typingsound;
-  h = window.screen.availHeight
-  w = window.screen.availWidth
+  h = window.innerHeight
+  w = window.innerWidth
   console.log(w);
   console.log(h);
 
 
   if (w<h){
     console.log('vertical')
-
     w = w - 20;
     h = w*1.3;
   }
   else {
     w = h/1.3;
+    console.log('horizontal')
   }
-
+  console.log('size of game:',w,h);
   // Instanciating Phaser object
   game = new Phaser.Game(w, h, Phaser.CANVAS, 'body', { preload: preload,
     create: create, update: update });
+
 
     // Preload, create and update are the 3 main functions used by Phaser
 
     // Preloading media (fonts, images, roommaps, sounds)
     function preload() {
-      this.game.scale.pageAlignHorizontally = true;
-      this.game.scale.pageAlignVertically = true;
-      this.game.scale.refresh();
+      //this.game.scale.pageAlignHorizontally = true;
+      //this.game.scale.pageAlignVertically = true;
+      //this.game.scale.refresh();
+      console.log("to")
+      console.log(game.width)
+      game.scale.setGameSize(game.width, game.height)
 
       game.load.bitmapFont('ubuntu', 'rolling-thunder.png', 'rolling-thunder.xml');
       game.load.spritesheet('room', 'images/firstRoom.png', 500, 355, 13)
@@ -67,13 +68,13 @@
 
     // Checking the mouse regularly (in this case for the first room)
     function update(){
-      for (var i=0; i<game.active.length;i++){
+      for (var i=0 ; i<game.active.length ; i++){
         game.scenes[game.active[i]].update();
       }
     }
 
   </script>
   <!-- Placed at the end of the document so the pages load faster -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="js/jquery-2.2.0.min.js"></script>
 </body>
 </html>

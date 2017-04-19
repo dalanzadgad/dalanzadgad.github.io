@@ -1,15 +1,15 @@
 // Firing the first event sequence (the title)
 function create() {
+
    typingsound = game.add.audio('typingsound');
 
+   //===================================================================
    var r = new Rule1();
-
    r.init({conditions: function(scene){
              return !(scene.objects['first_text'].isVisible);},
 
            actions: function(scene){
                var o = scene.objects['first_text'];
-
                o.isVisible = true;
                fadeIn(o.sprite, 1000, function(){
                    fadeOut(o.sprite, 1000,
@@ -26,13 +26,15 @@ function create() {
    text.init({name : 'first_text',
              text : 'Dans trois minutes au plus tard, \n'+
                      '  je devrai avoir quitte cet endroit \n'+
-                     'une fois pour toutes...'});
+                     'une fois pour toutes...',
+              x:0.1,
+              y:0.1});
    scene1.init(game, {name:'title',
                       objects: [text],
                      rules: [r]});
 
 
-
+   //===================================================================
 
    var r2 = new Rule1();
    r2.init({conditions: function(scene){
@@ -73,7 +75,8 @@ function create() {
              image: 'room',
              map: map,
              x:0,
-             y:0
+             y:0,
+             w:1
              })
    scene2.init(game, {name: 'room',
                       objects: [room],
