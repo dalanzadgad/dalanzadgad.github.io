@@ -4,15 +4,36 @@ function isIn(arr, obj) {
     return (arr.indexOf(obj) != -1);
 }
 
+var colormap = {'magenta':[255,0,255],
+                'blue1':[18,0,255],
+                'blue':[0,0,255],
+                'red':[255,0,0],
+                'yellow':[255,255,0],
+                'green':[0,255,0]
+                }
+
+function findColor(color){
+  console.log('find')
+   for (var i=0;i<Object.keys(colormap).length;i++){
+     var k = Object.keys(colormap)[i];
+     console.log(k, colormap[k]);
+     if (JSON.stringify(colormap[k]) == JSON.stringify([color.r, color.g, color.b])){
+        return k
+     }
+   }
+}
+
 function onDownMap(){
   typingsound.play();
   scaleX = this.object.map.width/this.object.sprite.width;
   scaleY = this.object.map.height/this.object.sprite.height;
   x = (game.input.x - this.object.x*game.width)*scaleX;
   y = (game.input.y - this.object.y*game.height)*scaleY;
-  color = this.object.bitmapData.getPixel32(Math.floor(x), Math.floor(y));
-  if (isIn(Object.keys(this.object.actions), color.toString())){
-    this.object.actions[color](this.scene);
+  color = this.object.bitmapData.getPixelRGB(Math.floor(x), Math.floor(y));
+  console.log(color)
+  colorcode = findColor(color);
+  if (!(colorcode === undefined)){
+    this.object.actions[colorcode](this.scene);
   }
 }
 
