@@ -1,3 +1,18 @@
+function preload() {
+  game.scenes = {};
+  game.active = [];
+  game.scale.setGameSize(game.width, game.height)
+  game.load.audio('typingsound', ['audio/typingsound.mp3']);
+  game.load.bitmapFont('ubuntu', 'rolling-thunder.png', 'rolling-thunder.xml');
+
+  game.load.spritesheet('room', 'images/firstRoom.png', 500,355,13)
+  game.load.image('roomMap', 'images/roomMap.png')
+
+  game.load.audio('fnaf', ['audio/fnaf.mp3']);
+
+
+}
+
 // Firing the first event sequence (the title)
 function create() {
 
