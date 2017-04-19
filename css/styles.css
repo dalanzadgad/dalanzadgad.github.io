@@ -1,8 +1,8 @@
 /* reset */
 body{
-  margin:0 auto;
+  margin:30 auto;
   width:1000px;
-  padding:0;
+  padding:30 30;
   font:normal 12px arial, sans-serif;
   color:#333;
   background-color:black;
