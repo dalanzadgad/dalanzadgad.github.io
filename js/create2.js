@@ -1,35 +1,11 @@
-function preload() {
-  game.scenes = {};
-  game.active = [];
-  game.scale.setGameSize(game.width, game.height)
-  game.load.audio('typingsound', ['audio/typingsound.mp3']);
-  game.load.bitmapFont('ubuntu', 'rolling-thunder.png', 'rolling-thunder.xml');
-
-  game.load.image('toll', 'images/toll.png')
-  game.load.image('tollMap', 'images/tollMap.png')
-7
-  game.load.image('passerelle', 'images/passerelle.png')
-  game.load.image('passerelleMap', 'images/passerelleMap.png')
-
-  game.load.image('guitare', 'images/guitare.png')
-  game.load.image('guitareMap', 'images/guitareMap.png')
-
-  game.load.image('night', 'images/night.png')
-  game.load.image('nightMap', 'images/nightMap.png')
-  game.load.image('cam', 'images/cam.png')
-  game.load.image('camMap', 'images/camMap.png')
-
-
-
-  game.load.audio('fnaf', ['audio/fnaf.mp3']);
-
-
+function Preload() {
+  var images = ['toll', 'passerelle', 'guitare', 'night', 'cam'];
+  return images;
 }
 
 // Firing the first event sequence (the title)
-function create() {
+function Create() {
 
-   typingsound = game.add.audio('typingsound');
 
    //===================================================================
    var r = new Rule1();
@@ -223,10 +199,8 @@ function create() {
            }
      });
      map = {name: 'guitareMap',
-
           'blue': function(scene){
             addDialog('Que guapo !')
-
             //console.log(scene.game.scenes);
             //scene.game.scenes['night'].deactivate();
             //fadeOut(scene.game.scenes['guitare'].objects['guitare'].sprite, 3000,

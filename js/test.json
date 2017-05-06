@@ -1,0 +1,131 @@
+[
+  {"type":"object",
+   "name":"first_text",
+   "text": "As I walked in the mountain, \\n  I finally found that secret place \\n known by very few...",
+   "x":0.1,
+   "y":0.1
+  },
+  {"type":"object",
+    "name":"toll",
+    "image":"toll",
+    "map":{
+      "blue": "addDialog('Ladies enjoying the moment...')",
+      "red": "addDialog('Nice waterfall...'); console.log(scene.game.scenes); scene.game.scenes['toll'].deactivate(); scene.game.scenes['title'].objects['first_text'].isVisible = false; scene.game.scenes['title'].objects['first_text'].sprite.alpha = 0; fadeOut(scene.game.scenes['toll'].objects['toll'].sprite, 3000, function(){scene.game.scenes['passerelle'].activate()});",
+      "green": "addDialog('Pristine pond')",
+      "yellow": "addDialog('Young men hanging out...')"
+    },
+    "x":0,
+    "y":0,
+    "w":1
+  },
+  {"type":"object",
+   "name": "passerelle",
+   "image": "passerelle",
+   "map":{
+     "blue":"addDialog(\"Don't walk aside...\")",
+     "red":"addDialog('Splash !'); console.log(scene.game.scenes); scene.game.scenes['passerelle'].deactivate(); fadeOut(scene.game.scenes['passerelle'].objects['passerelle'].sprite, 3000, function(){scene.game.scenes['cam'].activate()});"
+    },
+    "x":0,
+    "y":0,
+    "w":1
+  },
+
+  {"type":"object",
+   "name": "cam",
+   "image": "cam",
+   "map":{
+     "blue": "addDialog('Nothing important here')",
+     "red": "addDialog('Nice movie !'); console.log(scene.game.scenes); scene.game.scenes['cam'].deactivate(); fadeOut(scene.game.scenes['cam'].objects['cam'].sprite, 3000, function(){scene.game.scenes['night'].activate()});"
+       },
+       "x":0,
+       "y":0,
+       "w":1
+  },
+  {"type":"object",
+   "name": "night",
+   "image": "night",
+   "map":{
+     "blue":"addDialog('Nice star !');console.log(scene.game.scenes); scene.game.scenes['night'].deactivate(); fadeOut(scene.game.scenes['night'].objects['night'].sprite, 3000, function(){scene.game.scenes['guitare'].activate()});"
+     },
+     "x":0,
+     "y":0,
+     "w":1
+   },
+   {"type":"object",
+    "name": "guitare",
+    "image": "guitare",
+    "map":{
+      "blue": "addDialog('Que guapo !')"
+    },
+    "x":0,
+    "y":0,
+    "w":1
+  },
+
+  {"type":"rule",
+  "name": "rule1",
+  "conditions":"return !(scene.objects['first_text'].isVisible);",
+  "actions":"var o = scene.objects['first_text']; o.isVisible = true; fadeIn(o.sprite, 1000, function(){ fadeOut(o.sprite, 1000, function(){ scene.game.scenes['title'].deactivate(); scene.game.scenes['toll'].activate()})});"
+  },
+  {"type":"rule",
+    "name": "rule2",
+  "conditions":"var o1 = scene.game.scenes['title'].objects['first_text']; var o2 = scene.objects['toll']; return (o2.sprite.alpha ==0 && o1.sprite.alpha==0);",
+  "actions":"var o = scene.objects['toll']; o.animate(); fadeIn(o.sprite, 1000)"
+  },
+  {"type":"rule",
+    "name":"rule3",
+  "conditions":"var o1 = scene.game.scenes['toll'].objects['toll']; var o2 = scene.objects['passerelle']; return (o2.sprite.alpha ==0 && o1.sprite.alpha==0);",
+  "actions":"var o = scene.objects['passerelle']; o.animate(); fadeIn(o.sprite, 1000)"
+  },
+  {"type":"rule",
+    "name":"rule4",
+  "conditions":"var o1 = scene.game.scenes['passerelle'].objects['passerelle']; var o2 = scene.objects['cam']; return (o2.sprite.alpha ==0 && o1.sprite.alpha==0);",
+  "actions":"var o = scene.objects['cam']; o.animate(); fadeIn(o.sprite, 1000)"
+  },
+  {"type":"rule",
+    "name":"rule5",
+  "conditions":"var o1 = scene.game.scenes['cam'].objects['cam']; var o2 = scene.objects['night']; return (o2.sprite.alpha ==0 && o1.sprite.alpha==0);",
+  "actions":"var o = scene.objects['night']; o.animate(); fadeIn(o.sprite, 1000)"
+  },
+  {"type":"rule",
+    "name":"rule6",
+  "conditions":"var o1 = scene.game.scenes['night'].objects['night']; var o2 = scene.objects['guitare']; return (o2.sprite.alpha ==0 && o1.sprite.alpha==0);",
+  "actions":"var o = scene.objects['guitare']; o.animate(); fadeIn(o.sprite, 1000)"
+  },
+  {"type":"scene",
+    "name":"title",
+    "objects":["first_text"],
+    "rules":["rule1"]
+  },
+  {"type":"scene",
+    "name":"toll",
+    "objects":["toll"],
+    "rules":["rule2"]
+  },
+  {"type":"scene",
+    "name":"toll",
+    "objects":["toll"],
+    "rules":["rule2"]
+  },
+  {"type":"scene",
+    "name":"passerelle",
+    "objects":["passerelle"],
+    "rules":["rule3"]
+  },
+  {"type":"scene",
+    "name":"cam",
+    "objects":["cam"],
+    "rules":["rule4"]
+  },
+  {"type":"scene",
+    "name":"night",
+    "objects":["night"],
+    "rules":["rule5"]
+  },
+  {"type":"scene",
+    "name":"guitare",
+    "objects":["guitare"],
+    "rules":["rule6"]
+  }
+
+]

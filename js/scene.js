@@ -149,7 +149,24 @@ function Scene1(){
     }
   }
 
+function preload(){
+  game.scenes = {};
+  game.active = [];
+  game.load.audio('typingsound', ['audio/typingsound.mp3']);
+  game.load.bitmapFont('ubuntu', 'rolling-thunder.png', 'rolling-thunder.xml');
+  game.load.audio('fnaf', ['audio/fnaf.mp3']);
 
+  var images = Preload();
+  for (var i=0;i<images.length;i++){
+    game.load.image(images[i], 'images/'+images[i]+'.png')
+    game.load.image(images[i]+'Map', 'images/'+images[i]+'Map.png')
+  }
+}
+
+function create(){
+  typingsound = game.add.audio('typingsound');
+  Create();
+}
 
 function Object1(){
    this.init = function(options){
