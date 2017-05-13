@@ -23,20 +23,38 @@ function findColor(color){
    }
 }
 
-function onDownMap(){
+function getColor(o){
+  input_x = game.input.x;
+  input_y = game.input.y;
+  scaleX = o.map.width/o.sprite.width;
+  scaleY = o.map.height/o.sprite.height;
+  x = (input_x - o.x*game.width)*scaleX;
+  y = (input_y - o.y*game.height)*scaleY;
+  color = o.bitmapData.getPixelRGB(Math.floor(x), Math.floor(y));
+  return color;
+}
+
+function onEventMap(){
   typingsound.play();
-  scaleX = this.object.map.width/this.object.sprite.width;
-  scaleY = this.object.map.height/this.object.sprite.height;
-  x = (game.input.x - this.object.x*game.width)*scaleX;
-  y = (game.input.y - this.object.y*game.height)*scaleY;
-  color = this.object.bitmapData.getPixelRGB(Math.floor(x), Math.floor(y));
+  console.log(this.object)
+  color = getColor(this.object, game.input.x, game.input.y)
   console.log(color)
   colorcode = findColor(color);
   if (!(colorcode === undefined)){
-    this.object.actions[colorcode](this.scene);
+    mapActions = this.object.actions[colorcode];
+    console.log(mapActions)
+    if (typeof mapActions === 'function'){
+      mapActions(this.scene);
+    }
+    else{
+      if (this.type == 'down'){
+        mapActions[this.type](this.scene);
+      }
+    }
   }
 }
-
+function p(pointer){
+}
 
 function Scene1(){
     this.init = function(gameInstance, options){
@@ -66,6 +84,16 @@ function Scene1(){
              var a = this.rules[i].actions;
              a(this);
            }
+       }
+       for (var i=0;i<Object.keys(this.objects).length;i++){
+          k = Object.keys(this.objects)[i];
+          o = this.objects[k];
+          if (o.image !== undefined){
+            if (o.sprite.input.pointerOver()){
+              color = getColor(o);
+              console.log(color)
+            }
+          }
        }
     }
 
@@ -120,7 +148,12 @@ function Scene1(){
         o.bitmapData.update();
 
         console.log(o.bitmapData.width, o.bitmapData.height)
-        o.sprite.events.onInputDown.add(onDownMap, {object:o, scene:this});
+        o.sprite.events.onInputDown.add(onEventMap,
+          {object:o, scene:this, type:'down'});
+
+        //o.sprite.events.onInputOver.add(onEventMap,
+        //    {object:o, scene:this, type:'hover'});
+
       }
     }
 
@@ -165,6 +198,8 @@ function preload(){
 
 function create(){
   typingsound = game.add.audio('typingsound');
+  game.input.addMoveCallback(p, this);
+
   Create();
 }
 

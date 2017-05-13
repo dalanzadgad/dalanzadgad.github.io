@@ -16,7 +16,6 @@
 </head>
 <body>
   <script>
-
   // Instanciating Typewriter object
   var typewriter = new Typewriter();
   var typingsound;
@@ -24,7 +23,6 @@
   w = window.innerWidth
   console.log(w);
   console.log(h);
-
 
   if (w<h){
     console.log('vertical')
@@ -41,19 +39,12 @@
   game = new Phaser.Game(w, h, Phaser.CANVAS, 'body', { preload: preload,
     create: create, update: update });
 
-
-    // Preload, create and update are the 3 main functions used by Phaser
-
-    // Preloading media (fonts, images, roommaps, sounds)
-
-
-    // Checking the mouse regularly (in this case for the first room)
-    function update(){
-      for (var i=0 ; i<game.active.length ; i++){
-        game.scenes[game.active[i]].update();
-      }
+  // Update active scenes
+  function update(){
+    for (var i=0 ; i<game.active.length ; i++){
+      game.scenes[game.active[i]].update();
     }
-
+  }
   </script>
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="js/jquery-2.2.0.min.js"></script>
